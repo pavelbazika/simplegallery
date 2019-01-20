@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 25
+    //buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 24
+        minSdkVersion 16
+        targetSdkVersion 26
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
     }
@@ -20,11 +20,11 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:24.0.0"
+    compile "com.android.support:appcompat-v7:25.1.0"
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 
-apply plugin: 'maven'
+/*apply plugin: 'maven'
 group GROUP
 version VERSION_NAME
 def archives = uploadArchives {
@@ -36,3 +36,4 @@ def archives = uploadArchives {
 }
 archives
 task install(dependsOn: uploadArchives)
+*/
