@@ -37,9 +37,7 @@ public class BitmapUtils {
 	/**
 	 * Creates a thumbnail of requested size by doing a first sampled decoding of the bitmap to optimize memory
 	 */
-	public static Bitmap getThumbnail(Context mContext, Uri uri, int reqWidth, int reqHeight) {
-		Bitmap srcBmp = BitmapUtils.decodeSampledFromUri(mContext, uri, reqWidth, reqHeight);
-
+	private static Bitmap doGetThumbnail(Bitmap srcBmp, Context mContext, Uri uri, int reqWidth, int reqHeight) {
 		// If picture is smaller than required thumbnail
 		Bitmap dstBmp;
 		if (srcBmp.getWidth() < reqWidth && srcBmp.getHeight() < reqHeight) {
@@ -72,6 +70,15 @@ public class BitmapUtils {
 		return dstBmp;
 	}
 
+    public static Bitmap getThumbnail(Context mContext, Uri uri, int reqWidth, int reqHeight) {
+        Bitmap srcBmp = BitmapUtils.decodeSampledFromUri(mContext, uri, reqWidth, reqHeight);
+        return doGetThumbnail(srcBmp, mContext, uri, reqWidth, reqHeight);
+    }
+
+    public static Bitmap getThumbnailOrThrow(Context mContext, Uri uri, int reqWidth, int reqHeight) throws ELoadFailed {
+        Bitmap srcBmp = BitmapUtils.decodeSampledFromUriOrThrow(mContext, uri, reqWidth, reqHeight);
+        return doGetThumbnail(srcBmp, mContext, uri, reqWidth, reqHeight);
+    }
 
 	public static Bitmap getFullImage(Context mContext, Uri uri, int reqWidth, int reqHeight) {
 		final int TYPE_IMAGE = 0;
@@ -136,6 +143,9 @@ public class BitmapUtils {
 		return 0;
 	}
 
+	public static class ELoadFailed extends Exception {
+    }
+
 	/**
 	 * Decodifica ottimizzata per la memoria dei bitmap
 	 *
@@ -148,7 +158,7 @@ public class BitmapUtils {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static Bitmap decodeSampledFromUri(Context mContext, Uri uri, int reqWidth, int reqHeight) {
+	public static Bitmap decodeSampledFromUriOrThrow(Context mContext, Uri uri, int reqWidth, int reqHeight) throws ELoadFailed {
 
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -167,7 +177,7 @@ public class BitmapUtils {
 			return BitmapFactory.decodeStream(inputStreamSampled, null, options);
 		} catch (IOException e) {
 			Log.e("BitmapUtils", "Error");
-			return BitmapFactory.decodeResource(mContext.getResources(), R.drawable.image_broken);
+			throw new ELoadFailed();
 		} finally {
 			try {
 				inputStream.close();
@@ -177,6 +187,15 @@ public class BitmapUtils {
 			}
 		}
 	}
+
+    public static Bitmap decodeSampledFromUri(Context mContext, Uri uri, int reqWidth, int reqHeight) {
+	    try {
+	        return decodeSampledFromUriOrThrow(mContext, uri, reqWidth, reqHeight);
+        }
+        catch (ELoadFailed e) {
+            return BitmapFactory.decodeResource(mContext.getResources(), R.drawable.image_broken);
+        }
+    }
 
 
 	public static Bitmap decodeSampledBitmapFromResourceMemOpt(InputStream inputStream, int reqWidth, int reqHeight) {
