@@ -4,9 +4,9 @@ import it.feio.android.simplegallery.GalleryPagerFragment;
 
 import java.util.List;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class GalleryPagerAdapter extends FragmentStatePagerAdapter {
 

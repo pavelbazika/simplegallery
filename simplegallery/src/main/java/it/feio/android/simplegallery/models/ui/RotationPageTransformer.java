@@ -2,7 +2,7 @@ package it.feio.android.simplegallery.models.ui;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 /**
  * This page transformer will create the effect that each page is an edge of a regular polygon

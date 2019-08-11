@@ -4,9 +4,11 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
 
+import androidx.viewpager.widget.ViewPager;
+
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class DepthPageTransformer implements android.support.v4.view.ViewPager.PageTransformer {
+public class DepthPageTransformer implements ViewPager.PageTransformer {
 
 	private static final float MIN_SCALE = 0.75f;
 

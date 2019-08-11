@@ -4,7 +4,9 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
 
-public class ZoomOutPageTransformer implements android.support.v4.view.ViewPager.PageTransformer {
+import androidx.viewpager.widget.ViewPager;
+
+public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;
 

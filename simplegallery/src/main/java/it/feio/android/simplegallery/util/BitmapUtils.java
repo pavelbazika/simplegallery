@@ -17,7 +17,7 @@ package it.feio.android.simplegallery.util;
 
 import android.content.res.Resources;
 import android.graphics.*;
-import android.support.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.widget.ImageView;
 import it.feio.android.simplegallery.R;
 
