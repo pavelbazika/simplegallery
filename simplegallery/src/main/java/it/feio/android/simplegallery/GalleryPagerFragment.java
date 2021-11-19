@@ -78,6 +78,8 @@ public class GalleryPagerFragment extends Fragment {
         TouchImageView rootView = new TouchImageView(getActivity());
 		rootView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
 				.LayoutParams.MATCH_PARENT));
+		rootView.setImageURI(mImagePath);
+		/*
         Point dimensions = Display.getUsableSize(getActivity());
 		Glide.with(getActivity())
 				.load(mImagePath)
@@ -86,6 +88,7 @@ public class GalleryPagerFragment extends Fragment {
 				.override(dimensions.x, dimensions.y)
 				.error(R.drawable.image_broken)
 				.into(rootView);
+		 */
 
         return rootView;
     }
