@@ -7,9 +7,9 @@ import android.view.View;
 /**
  * This page transformer will create the effect that each page is an edge of a regular polygon
  * that is rotated to show each page. Can only be used on devices with Honeycomb or higher api
- *
+
  * Example usage:
- *
+
  *
 <pre>
  * if(BUILD.VERSION.SDK_INT >= BUILD.VERSION_CODES.HONEYCOMB){
@@ -24,9 +24,9 @@ import android.view.View;
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class RotationPageTransformer implements ViewPager.PageTransformer{
-    private float minAlpha;
-    private int degrees;
-    private float distanceToCentreFactor;
+    private final float minAlpha;
+    private final int degrees;
+    private final float distanceToCentreFactor;
  
     /**
      * Creates a RotationPageTransformer
@@ -45,7 +45,7 @@ public class RotationPageTransformer implements ViewPager.PageTransformer{
      */
     public RotationPageTransformer(int degrees, float minAlpha){
         this.degrees = degrees;
-        distanceToCentreFactor = (float) Math.tan(Math.toRadians(degrees / 2))/2;
+        distanceToCentreFactor = (float) Math.tan(Math.toRadians(degrees / (float)2))/2;
         this.minAlpha = minAlpha;
     }
  
@@ -53,7 +53,7 @@ public class RotationPageTransformer implements ViewPager.PageTransformer{
         int pageWidth = view.getWidth();
         int pageHeight = view.getHeight();
         view.setPivotX((float) pageWidth / 2);
-        view.setPivotY((float) (pageHeight + pageWidth * distanceToCentreFactor));
+        view.setPivotY(pageHeight + pageWidth * distanceToCentreFactor);
  
         if(position < -1){ //[-infinity,1)
             //off to the left by a lot

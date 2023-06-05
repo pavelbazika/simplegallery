@@ -32,7 +32,7 @@ import android.view.View;
 
 /**
  * This class implements method to help <b>TouchImageView</b> fling, draggin and
- * scaling.
+ * scaling. Vyrazeno, nepouzivano
  */
 public class GalleryViewPager extends ViewPager {
 

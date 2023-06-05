@@ -18,16 +18,15 @@ package it.feio.android.simplegallery;
 
 import android.app.ActionBar;
 import android.net.Uri;
-import com.bumptech.glide.Glide;
-import it.feio.android.simplegallery.util.Display;
-import it.feio.android.simplegallery.views.TouchImageView;
-import android.annotation.SuppressLint;
-import android.graphics.Point;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import it.feio.android.simplegallery.views.TouchImageView;
 
 
 public class GalleryPagerFragment extends Fragment {
@@ -41,20 +40,15 @@ public class GalleryPagerFragment extends Fragment {
     public static final String ARG_PATH = "path";
 
     /**
-     * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
-     */
-    private int mPageNumber;
-
-    /**
      * The fragment's image path, which is set to the argument value for {@link #ARG_PATH}.
      */
     private Uri mImagePath;
 
-    /**
+    /*
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
 	 * @param imagePath
 	 */
-    public static GalleryPagerFragment create(int pageNumber, Uri imagePath) {
+    public static GalleryPagerFragment create(int pageNumber, @NonNull Uri imagePath) {
     	GalleryPagerFragment fragment = new GalleryPagerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
@@ -64,16 +58,14 @@ public class GalleryPagerFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPageNumber = getArguments().getInt(ARG_PAGE);
-        mImagePath = Uri.parse(getArguments().getString(ARG_PATH));
+        mImagePath = Uri.parse(requireArguments().getString(ARG_PATH));
     }
 
     @Override
-    @SuppressLint("NewApi")
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
 
         TouchImageView rootView = new TouchImageView(getActivity());
 		rootView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
@@ -91,12 +83,5 @@ public class GalleryPagerFragment extends Fragment {
 		 */
 
         return rootView;
-    }
-
-    /**
-     * Returns the page number represented by this fragment object.
-     */
-    public int getPageNumber() {
-        return mPageNumber;
     }
 }
