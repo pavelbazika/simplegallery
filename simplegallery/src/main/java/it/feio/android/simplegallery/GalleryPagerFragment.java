@@ -71,16 +71,6 @@ public class GalleryPagerFragment extends Fragment {
 		rootView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
 				.LayoutParams.MATCH_PARENT));
 		rootView.setImageURI(mImagePath);
-		/*
-        Point dimensions = Display.getUsableSize(getActivity());
-		Glide.with(getActivity())
-				.load(mImagePath)
-				.fitCenter()
-				.crossFade()
-				.override(dimensions.x, dimensions.y)
-				.error(R.drawable.image_broken)
-				.into(rootView);
-		 */
 
         return rootView;
     }
