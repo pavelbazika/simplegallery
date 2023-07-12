@@ -86,23 +86,22 @@ public class BitmapUtils {
 	 */
 	public static int neededRotation(Context mContext, Uri uri) {
 		try {
-			InputStream is = mContext.getContentResolver().openInputStream(uri);
+			try (InputStream is = mContext.getContentResolver().openInputStream(uri)) {
+                ExifInterface exif = new ExifInterface(is);
+                int orientation = exif.getAttributeInt(
+                        ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
-			ExifInterface exif = new ExifInterface(is);
-			int orientation = exif.getAttributeInt(
-					ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-			if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-				return 270;
-			}
-			if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-				return 180;
-			}
-			if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-				return 90;
-			}
-			return 0;
-
+                if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                    return 270;
+                }
+                if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                    return 180;
+                }
+                if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                    return 90;
+                }
+                return 0;
+            }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

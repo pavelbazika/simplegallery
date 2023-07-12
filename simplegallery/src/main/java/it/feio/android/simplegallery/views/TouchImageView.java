@@ -13,7 +13,6 @@
 
 package it.feio.android.simplegallery.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -22,9 +21,6 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -35,6 +31,8 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.OverScroller;
 import android.widget.Scroller;
+
+import it.feio.android.simplegallery.util.AndroidHelper;
 
 public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView {
 
@@ -241,7 +239,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
 	        prevViewHeight = bundle.getInt("viewHeight");
 	        prevViewWidth = bundle.getInt("viewWidth");
 	        imageRenderedAtLeastOnce = bundle.getBoolean("imageRendered");
-	        super.onRestoreInstanceState(bundle.getParcelable("instanceState", Parcelable.class));
+	        super.onRestoreInstanceState(AndroidHelper.getParcelable(bundle, "instanceState", Parcelable.class));
 	        return;
       	}
 
@@ -1053,21 +1051,14 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
 		}
     }
     
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private static class CompatScroller {
     	Scroller scroller;
     	OverScroller overScroller;
     	final boolean isPreGingerbread;
     	
     	public CompatScroller(Context context) {
-    		if (VERSION.SDK_INT < VERSION_CODES.GINGERBREAD) {
-    			isPreGingerbread = true;
-    			scroller = new Scroller(context);
-    			
-    		} else {
-    			isPreGingerbread = false;
-    			overScroller = new OverScroller(context);
-    		}
+            isPreGingerbread = false;
+            overScroller = new OverScroller(context);
     	}
     	
     	public void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX, int minY, int maxY) {
@@ -1120,14 +1111,8 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
     	}
     }
     
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void compatPostOnAnimation(Runnable runnable) {
-    	if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-            postOnAnimation(runnable);
-            
-        } else {
-            postDelayed(runnable, 1000/60);
-        }
+        postOnAnimation(runnable);
     }
     
     private static class ZoomVariables {
