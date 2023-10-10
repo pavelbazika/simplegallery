@@ -143,10 +143,12 @@ public class BitmapUtils {
 			throw new ELoadFailed();
 		} finally {
 			try {
-                //noinspection ConstantConditions
-                inputStream.close();
-                //noinspection ConstantConditions
-                inputStreamSampled.close();
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (inputStreamSampled != null) {
+                    inputStreamSampled.close();
+                }
 			} catch (IOException | NullPointerException e) {
 				Log.e("BitmapUtils", "Failed to close streams");
 			}
