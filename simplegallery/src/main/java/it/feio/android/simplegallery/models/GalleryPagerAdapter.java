@@ -1,7 +1,5 @@
 package it.feio.android.simplegallery.models;
 
-import android.net.Uri;
-
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -11,9 +9,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import it.feio.android.simplegallery.GalleryPagerFragment;
 
 public class GalleryPagerAdapter extends FragmentStateAdapter {
-	private final List<Uri> resources;
+	private final List<GalleryItem> resources;
 
-	public GalleryPagerAdapter(FragmentActivity activity, List<Uri> resources) {
+	public GalleryPagerAdapter(FragmentActivity activity, List<GalleryItem> resources) {
 		super(activity);
 		this.resources = resources;
 	}

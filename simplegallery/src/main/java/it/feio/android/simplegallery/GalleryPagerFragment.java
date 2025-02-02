@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import it.feio.android.simplegallery.models.GalleryItem;
 import it.feio.android.simplegallery.views.TouchImageView;
 
 
@@ -39,20 +40,25 @@ public class GalleryPagerFragment extends Fragment {
      */
     public static final String ARG_PATH = "path";
 
+    public static final String ARG_PRIMARY = "primary";
+
     /**
      * The fragment's image path, which is set to the argument value for {@link #ARG_PATH}.
      */
     private Uri mImagePath;
 
+    private boolean mIsPrimary;
+
     /*
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
 	 * @param imagePath
 	 */
-    public static GalleryPagerFragment create(int pageNumber, @NonNull Uri imagePath) {
+    public static GalleryPagerFragment create(int pageNumber, @NonNull GalleryItem item) {
     	GalleryPagerFragment fragment = new GalleryPagerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
-        args.putSerializable(ARG_PATH, imagePath.toString());
+        args.putSerializable(ARG_PATH, item.getUri().toString());
+        args.putBoolean(ARG_PRIMARY, item.isPrimary());
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +67,7 @@ public class GalleryPagerFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mImagePath = Uri.parse(requireArguments().getString(ARG_PATH));
+        mIsPrimary = requireArguments().getBoolean(ARG_PRIMARY);
     }
 
     @Override
@@ -72,6 +79,7 @@ public class GalleryPagerFragment extends Fragment {
 				.LayoutParams.MATCH_PARENT));
 		rootView.setImageURI(mImagePath);
 
+        zobrazit cudlik nastavujici primary photo, zprocesit atd
         return rootView;
     }
 }
